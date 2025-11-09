@@ -22,13 +22,16 @@
 #include "codegen.h"
 
 int main(int argc, char **argv) {
-	std::cout << "Simple Syntax Compiler (SSC)" << "\n" << "Copyright (C) 2025 Spekie" << "\n" << "\n";
     if (argc < 2) {
+		std::cout << "Simple Syntax Compiler (SSC)" << "\n" << "Copyright (C) 2025 Spekie" << "\n" << "\n";
         std::cerr << "Usage: " << argv[0] << " <file>\n";
         return 1;
     }
     std::ifstream in(argv[1]);
-    if (!in) { std::cerr << "Cannot open file.\n"; return 1; }
+    if (!in) {
+		std::cout << "Simple Syntax Compiler (SSC)" << "\n" << "Copyright (C) 2025 Spekie" << "\n" << "\n";
+		std::cerr << "Cannot open file.\n"; return 1;
+	}
     std::string src((std::istreambuf_iterator<char>(in)), {});
 
     Lexer lex(src);
