@@ -17,7 +17,7 @@
 
 #include <sstream>
 #include <iostream>
-#include "codegen.h"
+#include "codegen.hpp"
 
 void CodeGen::emit(const std::string &s) { out.push_back(s); }
 

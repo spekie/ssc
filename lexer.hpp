@@ -17,7 +17,7 @@
 
 #include <vector>
 #include <string>
-#include "token.h"
+#include "token.hpp"
 
 #ifndef LEXER_HPP
 #define LEXER_HPP

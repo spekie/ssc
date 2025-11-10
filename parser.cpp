@@ -16,7 +16,7 @@
  */
 
 #include <iostream>
-#include "parser.h"
+#include "parser.hpp"
 
 Parser::Parser(std::vector<Token> t) : tokens(std::move(t)) {}
 

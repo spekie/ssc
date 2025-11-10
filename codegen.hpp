@@ -15,31 +15,25 @@
  * along with SSC.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <string>
 #include <vector>
-#include <memory>
-#include "token.h"
-#include "ast.h"
+#include <unordered_map>
+#include "ast.hpp"
 
-#ifndef PARSER_HPP
-#define PARSER_HPP
+#ifndef CODEGEN_HPP
+#define CODEGEN_HPP
 
-class Parser {
-    std::vector<Token> tokens;
-    size_t pos = 0;
+class CodeGen {
+    std::vector<std::string> out;
+    std::unordered_map<std::string,int> vars;
+    int nextOffset = 0;
 
-    Token peek() const;
-    Token consume();
-    bool accept(TokenKind k);
-    void expect(TokenKind k);
-    int precedence(TokenKind k) const;
-
-    std::unique_ptr<Expr> parsePrimary();
-    std::unique_ptr<Expr> parseBinRHS(int prec, std::unique_ptr<Expr> lhs);
-    std::unique_ptr<Expr> parseExpr();
+    void emit(const std::string &s);
+    void genExpr(Expr *e);
+    void genStmt(Stmt *s);
 
 public:
-    explicit Parser(std::vector<Token> t);
-    std::vector<std::unique_ptr<Stmt>> parseProgram();
+    std::string generate(const std::vector<std::unique_ptr<Stmt>> &program);
 };
 
 #endif

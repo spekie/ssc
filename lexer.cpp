@@ -17,7 +17,7 @@
 
 #include <cctype>
 #include <iostream>
-#include "lexer.h"
+#include "lexer.hpp"
 
 Lexer::Lexer(std::string text) : src(std::move(text)) {}
 
