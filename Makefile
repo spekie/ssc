@@ -1,15 +1,17 @@
+.POSIX:
+
 SRC = codegen.cpp lexer.cpp main.cpp parser.cpp
 OBJ = ${SRC:.cpp=.o}
-CC = g++
+CXXFLAGS = -Wall -Wextra -pedantic
 DESTDIR = /usr/local
 
 all: ssc
 
 .c.o:
-	${CC} -c ${CFLAGS} $<
+	${CXX} -c ${CXXFLAGS} $<
 
 ssc: ${OBJ}
-	${CC} -o $@ ${OBJ} ${LDFLAGS}
+	${CXX} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
 	rm -f ssc ${OBJ}
