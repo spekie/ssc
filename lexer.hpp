@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with SSC.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 #include <vector>
 #include <string>
 #include "token.hpp"
