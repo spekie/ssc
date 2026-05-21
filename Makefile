@@ -1,5 +1,6 @@
 .POSIX:
 
+CXX = g++
 OBJ = main.o lexer.o parser.o codegen.o
 CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic
 PREFIX = /usr/local
@@ -25,9 +26,13 @@ install: all
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -f ssc $(DESTDIR)$(PREFIX)/bin/ssc
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/ssc
+	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
+	cp -f ssc.1 $(DESTDIR)$(MANPREFIX)/man1/ssc.1
+	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/ssc.1
 
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/ssc
+	rm -f $(DESTDIR)$(MANPREFIX)/man1/ssc.1
 
 clean:
 	rm -f ssc $(OBJ)

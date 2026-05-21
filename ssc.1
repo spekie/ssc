@@ -1,0 +1,19 @@
+.TH ssc 1
+.SH NAME
+SSC - Simple Syntax Compiler
+.SH SYNOPSIS
+.B ssc
+.RB [file]
+.SH DESCRIPTION
+This is a small compiler written in C++ to learn more about the process of compiling and assembling code by converting a text file written in a high-level programming language, parsing it and then generate it in the form of assembly code.
+.SH DETAILED DESCRIPTION
+Source Code
+   |
+.P
+Lexer ---> Tokens
+   |
+.P
+Parser ---> Abstract Syntax Tree (AST)
+   |
+.P
+Code generation (Codegen) ---> Linux x86-64 Assembly Output
