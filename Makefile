@@ -1,9 +1,10 @@
 .POSIX:
 
-CXX = g++
+CXX = c++
 OBJ = main.o lexer.o parser.o codegen.o
 CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic
 PREFIX = /usr/local
+MANPREFIX = $(PREFIX)/share/man
 
 all: ssc
 
