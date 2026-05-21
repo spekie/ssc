@@ -1,9 +1,9 @@
+#ifndef LEXER_HPP
+#define LEXER_HPP
+
 #include <vector>
 #include <string>
 #include "token.hpp"
-
-#ifndef LEXER_HPP
-#define LEXER_HPP
 
 class Lexer {
     std::string src;

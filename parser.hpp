@@ -1,10 +1,10 @@
+#ifndef PARSER_HPP
+#define PARSER_HPP
+
 #include <vector>
 #include <memory>
 #include "token.hpp"
 #include "ast.hpp"
-
-#ifndef PARSER_HPP
-#define PARSER_HPP
 
 class Parser {
     std::vector<Token> tokens;

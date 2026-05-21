@@ -1,9 +1,9 @@
+#ifndef AST_HPP
+#define AST_HPP
+
 #include <memory>
 #include <string>
 #include <vector>
-
-#ifndef AST_HPP
-#define AST_HPP
 
 struct Expr {
     virtual ~Expr() = default;

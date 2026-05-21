@@ -1,10 +1,10 @@
+#ifndef CODEGEN_HPP
+#define CODEGEN_HPP
+
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include "ast.hpp"
-
-#ifndef CODEGEN_HPP
-#define CODEGEN_HPP
 
 class CodeGen {
     std::vector<std::string> out;
