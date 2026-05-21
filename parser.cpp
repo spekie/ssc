@@ -10,7 +10,22 @@ Token Parser::consume() { return pos < tokens.size() ? tokens[pos++] : Token(Tok
 bool Parser::accept(TokenKind k) { if (peek().kind == k) { consume(); return true; } return false; }
 void Parser::expect(TokenKind k) {
     if (peek().kind != k) {
-        std::cerr << "Expected token kind but got " << peek().text << "\n";
+        // Build a readable name for the expected token
+        auto kindName = [](TokenKind k) -> std::string {
+            switch (k) {
+                case TokenKind::Ident:  return "identifier";
+                case TokenKind::Int:    return "integer";
+                case TokenKind::Assign: return "'='";
+                case TokenKind::Semi:   return "';'";
+                case TokenKind::LParen: return "'('";
+                case TokenKind::RParen: return "')'";
+                case TokenKind::Let:    return "'let'";
+                case TokenKind::Print:  return "'print'";
+                default:                return "token";
+            }
+        };
+        std::string got = peek().text.empty() ? "<end of file>" : "'" + peek().text + "'";
+        std::cerr << "Error: expected " << kindName(k) << " but got " << got << "\n";
         exit(1);
     }
     consume();

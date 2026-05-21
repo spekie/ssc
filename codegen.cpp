@@ -11,6 +11,10 @@ void CodeGen::genExpr(Expr *e) {
         return;
     }
     if (auto v = dynamic_cast<VarExpr*>(e)) {
+        if (!vars.count(v->name)) {
+            std::cerr << "Error: variable '" << v->name << "' used before declaration\n";
+            exit(1);
+        }
         int off = vars[v->name];
         emit("    movq " + std::to_string(off) + "(%rbp), %rax");
         emit("    pushq %rax");
@@ -19,13 +23,13 @@ void CodeGen::genExpr(Expr *e) {
     if (auto b = dynamic_cast<BinaryExpr*>(e)) {
         genExpr(b->lhs.get());
         genExpr(b->rhs.get());
-        emit("    popq %rdx");
-        emit("    popq %rax");
+        emit("    popq %rcx");   // rhs (pushed second, popped first)
+        emit("    popq %rax");   // lhs (pushed first, popped second)
         switch (b->op) {
-            case '+': emit("    addq %rdx, %rax"); break;
-            case '-': emit("    subq %rdx, %rax"); break;
-            case '*': emit("    imulq %rdx, %rax"); break;
-            case '/': emit("    cqto"); emit("    idivq %rdx"); break;
+            case '+': emit("    addq %rcx, %rax"); break;
+            case '-': emit("    subq %rcx, %rax"); break;
+            case '*': emit("    imulq %rcx, %rax"); break;
+            case '/': emit("    cqto"); emit("    idivq %rcx"); break;
         }
         emit("    pushq %rax");
     }
@@ -33,7 +37,11 @@ void CodeGen::genExpr(Expr *e) {
 
 void CodeGen::genStmt(Stmt *s) {
     if (auto l = dynamic_cast<LetStmt*>(s)) {
-        if (!vars.count(l->name)) { nextOffset += 8; vars[l->name] = -nextOffset; }
+        if (vars.count(l->name)) {
+            std::cerr << "Error: variable '" << l->name << "' is already declared\n";
+            exit(1);
+        }
+        nextOffset += 8; vars[l->name] = -nextOffset;
         genExpr(l->expr.get());
         emit("    popq %rax");
         emit("    movq %rax, " + std::to_string(vars[l->name]) + "(%rbp)");
