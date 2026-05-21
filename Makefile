@@ -1,27 +1,35 @@
 .POSIX:
 
-SRC = codegen.cpp lexer.cpp main.cpp parser.cpp
-OBJ = ${SRC:.cpp=.o}
-CXXFLAGS = -Wall -Wextra -pedantic
-DESTDIR = /usr/local
+OBJ = main.o lexer.o parser.o codegen.o
+CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic
+PREFIX = /usr/local
 
 all: ssc
 
-.c.o:
-	${CXX} -c ${CXXFLAGS} $<
+ssc: $(OBJ)
+	$(CXX) $(LDFLAGS) -o $@ $(OBJ)
 
-ssc: ${OBJ}
-	${CXX} -o $@ ${OBJ} ${LDFLAGS}
+main.o: main.cpp lexer.hpp parser.hpp codegen.hpp token.hpp ast.hpp
+	$(CXX) $(CXXFLAGS) -c main.cpp
 
-clean:
-	rm -f ssc ${OBJ}
+lexer.o: lexer.cpp lexer.hpp token.hpp
+	$(CXX) $(CXXFLAGS) -c lexer.cpp
+
+parser.o: parser.cpp parser.hpp token.hpp ast.hpp
+	$(CXX) $(CXXFLAGS) -c parser.cpp
+
+codegen.o: codegen.cpp codegen.hpp ast.hpp
+	$(CXX) $(CXXFLAGS) -c codegen.cpp
 
 install: all
-	mkdir -p ${DESTDIR}${PREFIX}/bin
-	cp -f ssc ${DESTDIR}${PREFIX}/bin
-	chmod 755 ${DESTDIR}${PREFIX}/bin/ssc
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp -f ssc $(DESTDIR)$(PREFIX)/bin/ssc
+	chmod 755 $(DESTDIR)$(PREFIX)/bin/ssc
 
 uninstall:
-	rm -f ${DESTDIR}${PREFIX}/bin/ssc
+	rm -f $(DESTDIR)$(PREFIX)/bin/ssc
 
-.PHONY: all clean install uninstall
+clean:
+	rm -f ssc $(OBJ)
+
+.PHONY: all install uninstall clean
