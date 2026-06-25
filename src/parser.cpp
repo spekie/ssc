@@ -10,7 +10,6 @@ Token Parser::consume() { return pos < tokens.size() ? tokens[pos++] : Token(Tok
 bool Parser::accept(TokenKind k) { if (peek().kind == k) { consume(); return true; } return false; }
 void Parser::expect(TokenKind k) {
     if (peek().kind != k) {
-        // Build a readable name for the expected token
         auto kindName = [](TokenKind k) -> std::string {
             switch (k) {
                 case TokenKind::Ident:  return "identifier";

@@ -1,0 +1,6 @@
+// declare variables
+let x = 10;
+let y = 2;
+
+// print an expression
+print x * y + 5;

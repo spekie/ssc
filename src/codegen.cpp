@@ -23,8 +23,8 @@ void CodeGen::genExpr(Expr *e) {
     if (auto b = dynamic_cast<BinaryExpr*>(e)) {
         genExpr(b->lhs.get());
         genExpr(b->rhs.get());
-        emit("    popq %rcx");   // rhs (pushed second, popped first)
-        emit("    popq %rax");   // lhs (pushed first, popped second)
+        emit("    popq %rcx");
+        emit("    popq %rax");
         switch (b->op) {
             case '+': emit("    addq %rcx, %rax"); break;
             case '-': emit("    subq %rcx, %rax"); break;
